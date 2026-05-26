@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Personal Expense Tracker</title>
+<style>
+body {
+    margin:0;
+    font-family: Arial;
+    background:#0f172a;
+    color:white;
+}
+.navbar {
+    background:#1a1a2e;
+    padding:15px;
+}
+.navbar a {
+    color:white;
+    margin:10px;
+    cursor:pointer;
+    text-decoration:none;
+}
+.container {
+    padding:20px;
+    text-align:center;
+    min-height: calc(100vh - 60px);
+    display: flex;
+    justify-content: center; 
+    align-items: center; 
+}
+.box {
+    background:#1a1a2e;
+    padding:20px;
+    width:300px;
+    margin:auto;
+    border-radius:10px;
+    text-align: center;
+}
+input {
+    width:90%;
+    padding:10px;
+    margin:10px;
+}
+button {
+    padding:10px;
+    margin:5px;
+}
+.hidden {
+    display:none;
+}
+</style>
+</head>
+
+<body>
+
+<div class="navbar">
+    <a onclick="showPage('login')">Login</a>
+    <a onclick="showPage('signup')">Signup</a>
+    <a onclick="showPage('dashboard')">Dashboard</a>
+    <a onclick="showPage('add')">Add Expense</a>
+    <a onclick="showPage('about')">About</a>
+</div>
+
+<!-- LOGIN -->
+<div id="login" class="container">
+    <div class="box">
+        <h2>Login</h2>
+        <input type="text" id="username" placeholder="Username"><br>
+        <input type="password" id="password" placeholder="Password"><br>
+        <button onclick="login()">Login</button>
+    </div>
+</div>
+
+<!-- SIGNUP -->
+<div id="signup" class="container hidden">
+    <div class="box">
+        <h2>Signup</h2>
+        <input type="text" id="newUsername" placeholder="Username"><br>
+        <input type="password" id="newPassword" placeholder="Password"><br>
+        <input type="password" id="confirmPassword" placeholder="Confirm Password"><br>
+        <button onclick="signup()">Signup</button>
+    </div>
+</div>
+
+<!-- DASHBOARD -->
+<div id="dashboard" class="container hidden">
+    <h2>Welcome, <span id="user"></span></h2>
+    <h3>Total: ₹<span id="total">0</span></h3>
+    <ul id="list"></ul>
+</div>
+
+<!-- ADD EXPENSE -->
+<div id="add" class="container hidden">
+    <div class="box">
+        <h2>Add Expense</h2>
+        <input type="text" id="title" placeholder="Title"><br>
+        <input type="number" id="amount" placeholder="Amount"><br>
+        <button onclick="addExpense()">Add</button>
+    </div>
+</div>
+
+<!-- ABOUT -->
+<div id="about" class="container hidden">
+    <h2>About</h2>
+    <p>This is a simple Expense Tracker</p>
+</div>
+
+<script>
+
+// Page Switch
+function showPage(page){
+    document.querySelectorAll('.container').forEach(div=>div.classList.add('hidden'));
+    document.getElementById(page).classList.remove('hidden');
+}
+
+// Signup
+function signup(){
+    let u = newUsername.value;
+    let p = newPassword.value;
+    let c = confirmPassword.value;
+
+    if(p!==c){
+        alert("Passwords not match");
+        return;
+    }
+
+    let users = JSON.parse(localStorage.getItem("users")) || [];
+
+    if(users.find(x=>x.username===u)){
+        alert("User exists");
+        return;
+    }
+
+    users.push({username:u,password:p});
+    localStorage.setItem("users",JSON.stringify(users));
+
+    alert("Signup success");
+    showPage('login');
+}
+
+// Login
+function login(){
+    let u = username.value;
+    let p = password.value;
+
+    let users = JSON.parse(localStorage.getItem("users")) || [];
+
+    let valid = users.find(x=>x.username===u && x.password===p);
+
+    if(valid){
+        localStorage.setItem("currentUser",u);
+        document.getElementById("user").innerText=u;
+        loadExpenses();
+        showPage('dashboard');
+    } else {
+        alert("Invalid");
+    }
+}
+
+// Add Expense
+function addExpense(){
+    let t = title.value;
+    let a = amount.value;
+
+    let exp = JSON.parse(localStorage.getItem("expenses")) || [];
+    exp.push({title:t,amount:a});
+
+    localStorage.setItem("expenses",JSON.stringify(exp));
+    alert("Added");
+    loadExpenses();
+}
+
+// Load Expenses
+function loadExpenses(){
+    let exp = JSON.parse(localStorage.getItem("expenses")) || [];
+
+    let total = 0;
+    let list = document.getElementById("list");
+    list.innerHTML="";
+
+    exp.slice(-5).reverse().forEach(e=>{
+        total += Number(e.amount);
+        let li = document.createElement("li");
+        li.innerText = e.title+" - ₹"+e.amount;
+        list.appendChild(li);
+    });
+
+    document.getElementById("total").innerText = total;
+}
+
+</script>
+
+</body>
+</html>

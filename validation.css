@@ -1,0 +1,96 @@
+body {
+      margin:0px;
+      font-family: Arial, sans-serif;
+       background-image:url(abstract.png);
+       background-size: cover;
+       background-position: center;
+       background-repeat: no-repeat;
+       display: flex;
+       justify-content: center;
+       align-items: center;
+       min-height: 100vh; 
+    }
+        .navbar {
+      background-color: #1a1a2e;
+      overflow: hidden;
+      position: fixed;
+      top: 0;
+      width: 100%;
+      box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+    }
+      .navbar span
+    {
+        float: left;
+      display: block;
+      color: #f2f2f2;
+      text-align: center;
+      padding: 14px 20px;
+      text-decoration: none;
+    }
+    .content {
+    padding: 80px 20px 20px 20px;
+}
+
+.logcontent {
+    display: flex;
+    justify-content: center;
+    margin-top: 50px;
+}
+
+.logbox {
+    background-color: #1a1a2e;
+    border-radius: 12px;
+    padding: 40px;
+    width: 350px;
+    text-align: center;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.4);
+}
+
+.logbox h2 {
+    margin-bottom: 25px;
+    color: #f2f2f2;
+}
+
+.logbox input[type="text"],
+.logbox input[type="password"] {
+    width: 90%;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    outline: none;
+    font-size: 16px;
+}
+
+.logbox input[type="text"]:focus,
+.logbox input[type="password"]:focus {
+    border-color: #667eea;
+}
+
+.logbox input[type="submit"],
+.logbox input[type="reset"] {
+    width: 45%;
+    padding: 10px;
+    margin: 10px 5px 0 5px;
+    border: none;
+    border-radius: 8px;
+    background-color: #667eea;
+    color: white;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.logbox input[type="submit"]:hover,
+.logbox input[type="reset"]:hover {
+    background-color: #5a67d8;
+}
+
+.logbox p {
+    color: #f2f2f2;
+    margin-top: 15px;
+}
+
+.logbox a {
+    color: #667eea;
+    text-decoration: none;
+}

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+    <head> 
+        <link rel="stylesheet" href="validation.css">
+    </head>
+    <body>
+        <div class="navbar">
+    <span><b>PersonalExpenseTracker</b></span></div>
+<div class="logcontent">
+    <div class="logbox">
+        <h2>Signup</h2>
+        <form onsubmit="signup(event)">
+            <input type="text" id="newUsername" placeholder="Username" required>
+            <br><br>
+            <input type="password" id="newPassword" placeholder="Password" required>
+            <br><br>
+            <input type="password" id="confirmPassword" placeholder="Confirm Password" required>
+            <br><br>
+            <input type="submit" value="Signup">
+            <input type="reset" value="Reset">
+        </form>
+        <p>Already have an account? <a href="login.html">Login</a></p>
+    </div>
+</div>
+
+<script>
+function signup(e){
+    e.preventDefault();
+
+    const username = document.getElementById("newUsername").value;
+    const password = document.getElementById("newPassword").value;
+    const confirmPassword = document.getElementById("confirmPassword").value;
+
+    if(password !== confirmPassword){
+        alert("Passwords do not match!");
+        return;
+    }
+
+    let users = JSON.parse(localStorage.getItem("users")) || [];
+
+    // Check if username already exists
+    if(users.some(u => u.username === username)){
+        alert("Username already taken!");
+        return;
+    }
+
+    // Add new user
+    users.push({ username, password });
+    localStorage.setItem("users", JSON.stringify(users));
+    alert("Signup successful! You can now login.");
+    window.location.href = "log.html"; // redirect to login page
+}
+</script>
+    </body>
+</html>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Add Expense</title>
+<link rel="stylesheet" href="intro.css">
+</head>
+<body>
+<div class="navbar">
+    <span><b>PersonalExpenseTracker</b></span>
+    <a href="exp.html">Home</a>
+    <a href="addexpense.html">Add Expense</a>
+    <a href="#list">Expense List</a>
+    <a href="#reports">Reports</a>
+    <a href="about.html">About</a>
+    </div>
+<div class="content">
+    <div class="box">
+        <h2>Add Expense</h2>
+        <form onsubmit="addExpense(event)">
+            <input type="text" id="expenseTitle" placeholder="Expense Title" required>
+            <br><br>
+            <input type="number" id="expenseAmount" placeholder="Amount" required>
+            <br><br>
+            <input type="date" id="expenseDate" required>
+            <br><br>
+            <input type="submit" value="Add Expense">
+            <input type="reset" value="Reset">
+        </form>
+        <p><a href="exp.html">Go back to Dashboard</a></p>
+    </div>
+</div>
+
+<script>
+function addExpense(e) {
+    e.preventDefault();
+
+    const title = document.getElementById("expenseTitle").value;
+    const amount = parseFloat(document.getElementById("expenseAmount").value);
+    const date = document.getElementById("expenseDate").value;
+
+    if(!title || !amount || !date) {
+        alert("Please fill in all fields!");
+        return;
+    }
+
+    const expense = { title, amount, date };
+    let expenses = JSON.parse(localStorage.getItem("expenses")) || [];
+    expenses.push(expense);
+    localStorage.setItem("expenses", JSON.stringify(expenses));
+
+    alert("Expense added successfully!");
+    document.querySelector("form").reset();
+}
+</script>
+
+</body>
+</html>

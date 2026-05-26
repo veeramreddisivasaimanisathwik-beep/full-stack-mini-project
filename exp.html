@@ -1,0 +1,62 @@
+<html>
+    <head>
+        <title>personal expense tracker</title>
+        <link rel="stylesheet" href="intro.css">
+    </head>
+    <body>
+        <div class="navbar">
+    <span><b>PersonalExpenseTracker</b></span>
+    <a href="#home">Home</a>
+    <a href="addexpense.html">Add Expense</a>
+    <a href="#list">Expense List</a>
+    <a href="#reports">Reports</a>
+    <a href="about.html">About</a>
+  </div>
+
+  <div class="content">
+    <h1>Welcome, <span id="userEmail"></span></h1>
+    <p>Manage your spending with clarity and ease</p>
+  </div>
+<!-- Summary Card -->
+<div class="summary-card">
+    <h2>Total Expenses: ₹<span id="totalExpenses">0</span></h2>
+</div>
+
+<!-- Recent Expenses List -->
+<div class="recent-expenses">
+    <h3>Last 5 Expenses:</h3>
+    <ul id="expenseList">
+        <!-- Expenses will be dynamically inserted here -->
+    </ul>
+</div>
+
+<script>
+    // Display current user email
+    const currentUser = localStorage.getItem("currentUser");
+    document.getElementById("userEmail").textContent = currentUser;
+
+    // Demo: Fetch expenses from localStorage
+    let expenses = JSON.parse(localStorage.getItem("expenses")) || [];
+
+    // Calculate total expenses
+    let total = expenses.reduce((sum, exp) => sum + Number(exp.amount), 0);
+    document.getElementById("totalExpenses").textContent = total;
+
+    // Show last 5 expenses
+    const listEl = document.getElementById("expenseList");
+    const lastFive = expenses.slice(-5).reverse();
+    lastFive.forEach(exp => {
+        const li = document.createElement("li");
+        li.textContent = `${exp.name} - ₹${exp.amount}`;
+        listEl.appendChild(li);
+    });
+
+    // Logout function
+    function logout() {
+        localStorage.removeItem("isLoggedIn");
+        localStorage.removeItem("currentUser");
+        window.location.href = "login.html";
+    }
+</script>
+    </body>
+</html>

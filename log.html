@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>login</title>
+        <link rel="stylesheet" href="validation.css">
+    </head>
+    <body>
+         <div class="navbar">
+    <span><b>PersonalExpenseTracker</b></span></div>
+    <div class="logcontent">
+    <div class="logbox">
+        <h2>Login</h2>
+        <form onsubmit="login(event)">
+            <input type="text" id="username" placeholder="Username" required>
+            <br><br>
+            <input type="password" id="password" placeholder="Password" required>
+            <br><br>
+            <input type="submit" value="Login">
+            <input type="reset" value="Reset">
+        </form>
+        <p>Don't have an account? <a href="signin.html">Signup</a></p>
+    </div>
+</div>
+
+<script>
+function login(e){
+    e.preventDefault();
+    const username = document.getElementById("username").value;
+    const password = document.getElementById("password").value;
+
+    let users = JSON.parse(localStorage.getItem("users")) || [];
+    const validUser = users.find(u => u.username === username && u.password === password);
+
+    if(validUser){
+        localStorage.setItem("isLoggedIn", "true");
+        localStorage.setItem("currentUser", username);
+        alert("Login Successful!");
+        window.location.href = "exp.html"; // redirect to homepage
+    } else {
+        alert("Invalid username or password!");
+    }
+}
+</script>
+    </body>
+</html>
